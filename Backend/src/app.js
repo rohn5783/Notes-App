@@ -7,5 +7,6 @@ app.use(express.json());
 connectDB();
 
 app.use("/api/notes", userRouter);
+app.use("/api/notes", userRouter);
 
 export default app;

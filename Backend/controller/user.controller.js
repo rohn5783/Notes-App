@@ -38,14 +38,38 @@ res.status(200).json({
 //  user login
 
 
+async function loginUser(req, res) {
+  const user = await User.findOne({
+    $or: [{ userName: req.body.userName }, { email: req.body.email }],
+  })
+  if (!user) {
+    return res.status(400).json({
+      message: "User not found",
+    });
+  }
+  const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password);
+  if (!isPasswordCorrect) {
+    return res.status(400).json({
+      message: "Password is incorrect",
+    });
+  }
+  const token = jwt.sign({
+    id: user._id
+  },process.env.JWT_SECRET,{expiresIn: "1h"},
+);
+  res.cookie("token", token);
+  res.status(200).json({
+    message: "User logged in successfully",
+  })
 
+}
 
 
 
 
 
 export default {
-  createUser,
-};
+  createUser, loginUser
+}
 
 
