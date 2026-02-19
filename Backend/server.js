@@ -2,7 +2,7 @@ import app from "./src/app.js";
 
 
 
-app.listen(300, ()=> {
-    console.log("Server is running on port 300");
+app.listen(3000, ()=> {
+    console.log("Server is running on port 3000");
 })
 
