@@ -20,18 +20,18 @@ async function createUser(req, res) {
     password: hash,
     profilePic
   })
-  res.status(201).json({
-    message: "User registered successfully"
-  })
-//   const token = jwt.sign({
-//     id: id._user
-//   },process.env.JWT_SECRET,{expiresIn: "1h"},
-// );
-// res.cookie("token", token);
-// res.status(200).json({
-//   message: "User registered successfully",
+  // res.status(201).json({
+  //   message: "User registered successfully"
+  // })
+  const token = jwt.sign({
+    id: user._id
+  },process.env.JWT_SECRET,{expiresIn: "1h"},
+);
+res.cookie("token", token);
+res.status(200).json({
+  message: "User registered successfully",
   
-// });
+});
 }
 
 
@@ -53,11 +53,11 @@ async function loginUser(req, res) {
       message: "Password is incorrect",
     });
   }
-//   const token = jwt.sign({
-//     id: user._id
-//   },process.env.JWT_SECRET,{expiresIn: "1h"},
-// );
-//   res.cookie("token", token);
+  const token = jwt.sign({
+    id: user._id
+  },process.env.JWT_SECRET,{expiresIn: "1h"},
+);
+  res.cookie("token", token);
   res.status(200).json({
     message: "User logged in successfully",
   })
