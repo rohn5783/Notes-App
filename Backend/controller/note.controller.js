@@ -1,4 +1,4 @@
-import { select } from "three/tsl";
+
 import Note from "../model/notes.model.js";
 import slugify from "slugify";
 

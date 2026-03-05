@@ -1,6 +1,6 @@
 import app from "./src/app.js";
 import cookieParser from "cookie-parser";
-
+import redis from "./config/cache.js";
 app.use(cookieParser());
 
 app.listen(3000, ()=> {
