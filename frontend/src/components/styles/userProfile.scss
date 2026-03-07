@@ -1,0 +1,27 @@
+.profile-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #0f172a;
+  color: white;
+  text-align: center;
+}
+
+.mahadev {
+  font-size: 60px;
+  font-weight: bold;
+  color: #f97316;
+}
+
+.progress {
+  font-size: 28px;
+  margin-top: 20px;
+}
+
+.notes {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #cbd5f5;
+}
