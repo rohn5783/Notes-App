@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
 import UserProfile from "./components/pages/userProfile";
+import Protected from "./auth/protected.jsx";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/profile",
-    element: <UserProfile />
+    element:<Protected><UserProfile /></Protected>
   }
 ]);
 

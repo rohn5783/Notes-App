@@ -1,4 +1,4 @@
-import { login,register }  from "../../services/auth.api";
+import { login,register,logout }  from "../../services/auth.api";
 import { useContext }   from "react";
 import { AuthContext } from "../auth.context.jsx";
 
@@ -22,8 +22,14 @@ async function handleRegister({email, password}) {
     setIsLoading(false);
 
 }
+async function logout() {
+    setIsLoading(true);
+    // const response = await register({email, password});
+    setUser(null);
+    setIsLoading(false);
+}
 
 
-return {user, isLoading, handleLogin, handleRegister};
+return {user, isLoading, handleLogin, handleRegister, logout};
 
 }
