@@ -1,20 +1,21 @@
+import React, { useEffect } from "react";
 import { useAuth } from "./hooks/useAuth";
-import { Navigate,useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 
 const Protected = ({ children }) => {
-  const { user, isLoading } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate("/login");
+    }
+  }, [user, loading, navigate]);
 
-  if (!user) {
-    navigate("/login");
-  }
+  if (loading) return <h1>Loading...</h1>;
+  if (!user) return null; 
 
-  return <>{children}</>;
+  return children;
 };
 
 export default Protected;
