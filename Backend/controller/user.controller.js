@@ -2,18 +2,19 @@ import jwt from "jsonwebtoken";
 import User from "../model/user.model.js";
 import bcrypt from "bcryptjs";
 import redis from "../config/cache.js";
-
-// REGISTER
+//  Register
 async function createUser(req, res) {
   const { userName, email, password } = req.body;
 
-  if (!password) {
-    return res.status(400).json({ message: "Password required" });
+  if (!userName || !email || !password) {
+    return res.status(400).json({ message: "All fields are required" });
   }
 
-  const user = await User.findOne({ $or: [{ userName }, { email }] });
+  const existingUser = await User.findOne({
+    $or: [{ userName }, { email }],
+  });
 
-  if (user) {
+  if (existingUser) {
     return res.status(400).json({ message: "User already exists" });
   }
 
@@ -25,52 +26,67 @@ async function createUser(req, res) {
     password: hashedPassword,
   });
 
+  console.log(newUser);
+
   res.status(201).json({
     message: "User created successfully",
-  
   });
-  // console.log(user)
 }
 
 // LOGIN
 async function loginUser(req, res) {
-  try {
-    const { userName, email, password } = req.body;
 
-    if (!password) {
-      return res.status(400).json({ message: "Password required" });
-    }
+  const { email, password } = req.body;
 
-    const user = await User.findOne({
-      $or: [{ userName }, { email }],
+  // validation
+  if (!email || !password) {
+    return res.status(400).json({
+      message: "Email and password are required",
     });
-
-    if (!user) {
-      return res.status(400).json({
-        message: "User not found",
-      });
-    }
-
-    const isPasswordCorrect = await bcrypt.compare(password, user.password);
-
-    if (!isPasswordCorrect) {
-      return res.status(400).json({
-        message: "Password is incorrect",
-      });
-    }
-
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
-
-    res.cookie("token", token);
-
-    res.status(200).json({
-      message: "User logged in successfully",
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
   }
+
+  // find user
+  const user = await User.findOne({
+    $or: [{ email: email }, { userName: email }],
+  });
+
+  if (!user) {
+    return res.status(400).json({
+      message: "User not found",
+    });
+  }
+
+  // compare password
+  const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+  if (!isPasswordCorrect) {
+    return res.status(400).json({
+      message: "Password is incorrect",
+    });
+  }
+
+  // create token
+  const token = jwt.sign(
+    { id: user._id },
+    process.env.JWT_SECRET,
+    { expiresIn: "1h" }
+  );
+
+  // set cookie
+  res.cookie("token", token, {
+    httpOnly: true,
+    sameSite: "lax",
+  });
+
+  // response
+  res.status(200).json({
+    message: "User logged in successfully",
+    user: {
+      id: user._id,
+      email: user.email,
+      userName: user.userName,
+    },
+  });
 }
 
 async function logoutUser(req, res) {

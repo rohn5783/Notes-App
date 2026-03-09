@@ -4,34 +4,40 @@ import { useAuth } from "../../auth/hooks/useAuth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 function Login() {
-   const {handleLogin,Loading} = useAuth();
-const [email, setemail] = useState("");
-const [password, setpassword] = useState("");
+  const { handleLogin, Loading } = useAuth();
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    await handleLogin({email,password});
-navigate("/profile");
-  
+ async function handleSubmit(e) {
+  e.preventDefault();
+  // console.log(email, password);
+
+  if (!email || !password) {
+    alert("Please enter email and password");
+    return;
   }
-  if(Loading) return <div>Loading...</div>
 
-
-
+  try {
+    await handleLogin({ email, password });
+    navigate("/profile");
+    console.log("login successful")
+  } catch (error) {
+    console.log(error.response?.data);
+  }
+  console.log("login finished")
+}
+  if (Loading) return <div>Loading...</div>;
 
   return (
     <div className="login-page">
       <div className="login-card">
-
         <h2>Login</h2>
 
         <form onSubmit={handleSubmit}>
-
-          <input 
+          <input
             type="email"
             value={email}
             onChange={(e) => setemail(e.target.value)}
@@ -45,17 +51,13 @@ navigate("/profile");
             placeholder="Enter your password"
           />
 
-          <button type="submit">
-            Login
-          </button>
-
+          <button type="submit">Login</button>
         </form>
 
         <p className="bottom-text">
-          Don't have an account? 
+          Don't have an account?
           <Link to="/register"> Register</Link>
         </p>
-
       </div>
     </div>
   );

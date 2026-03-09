@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import "../styles/register.scss";
 import { useState } from "react";
@@ -5,52 +6,74 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/hooks/useAuth";
 
 function Register() {
-  const {handleRegister,Loading} = useAuth();
-const [name, setname] = useState("");
-const [email, setemail] = useState("");
-const [password, setpassword] = useState("");
+  const { handleRegister, Loading } = useAuth();
 
-const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    await handleRegister({name,email,password});
-navigate("/login");
-  
+  const navigate = useNavigate();
+
+
+async function handleSubmit(e) {
+  e.preventDefault();
+
+  if (!name || !email || !password) {
+    setError("All fields are required");
+    return;
   }
-  if(Loading) return <div>Loading...</div>
+
+  setError("");
+
+  await handleRegister({
+    userName: name,
+    email: email,
+    password: password
+  });
+
+  navigate("/profile");
+}
+
+
+  if (Loading) return <div>Loading...</div>;
+
   return (
     <div className="register-page">
-
       <div className="register-card">
 
         <h2>Create Account</h2>
+
+        {error && <p className="error">{error}</p>}
 
         <form onSubmit={handleSubmit}>
 
           <input
             value={name}
-            onChange={(e) => setname(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
             type="text"
             placeholder="Enter your name"
+            required
           />
 
           <input
             value={email}
-            onChange={(e) => setemail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             type="email"
             placeholder="Enter your email"
+            required
           />
 
           <input
             value={password}
-            onChange={(e) => setpassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             type="password"
             placeholder="Enter password"
+            required
           />
 
-          <button type="submit">
-            Register
+          <button type="submit" disabled={Loading}>
+            {Loading ? "Registering..." : "Register"}
           </button>
 
         </form>
@@ -61,7 +84,6 @@ navigate("/login");
         </p>
 
       </div>
-
     </div>
   );
 }

@@ -13,12 +13,19 @@ return response.data;
 
 
 
- export async function register({ email, password }) {
 
-const response = await api.post('/api/notes/register', { email, password });
+export async function register({ userName, email, password }) {
+
+const response = await api.post('/api/notes/register', {
+  userName,
+  email,
+  password
+});
+
 return response.data;
 
 }
+
 
 export async function logout() {
 
