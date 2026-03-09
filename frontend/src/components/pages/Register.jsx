@@ -1,45 +1,53 @@
-
 import { Link } from "react-router-dom";
 import "../styles/register.scss";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/hooks/useAuth";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function Register() {
+
   const { handleRegister, Loading } = useAuth();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
+  async function handleSubmit(e) {
+    e.preventDefault();
 
-async function handleSubmit(e) {
-  e.preventDefault();
+    if (!name || !email || !password) {
+      setError("All fields are required");
+      return;
+    }
 
-  if (!name || !email || !password) {
-    setError("All fields are required");
-    return;
+    setError("");
+
+    await handleRegister({
+      userName: name,
+      email: email,
+      password: password
+    });
+
+    navigate("/profile");
   }
 
-  setError("");
-
-  await handleRegister({
-    userName: name,
-    email: email,
-    password: password
-  });
-
-  navigate("/profile");
-}
-
-
-  if (Loading) return <div>Loading...</div>;
+  if (Loading)
+    return (
+      <div className="loading-screen">
+        <div className="loader"></div>
+      </div>
+    );
 
   return (
     <div className="register-page">
+
+      <div className="background-blur"></div>
+
       <div className="register-card">
 
         <h2>Create Account</h2>
@@ -48,29 +56,47 @@ async function handleSubmit(e) {
 
         <form onSubmit={handleSubmit}>
 
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            type="text"
-            placeholder="Enter your name"
-            required
-          />
+          <div className="input-group">
+            <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              type="text"
+              required
+            />
+            <label>Name</label>
+          </div>
 
-          <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-            placeholder="Enter your email"
-            required
-          />
+          <div className="input-group">
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              required
+            />
+            <label>Email</label>
+          </div>
 
-          <input
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            placeholder="Enter password"
-            required
-          />
+          {/* Password Field */}
+
+          <div className="input-group password-group">
+
+            <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              type={showPassword ? "text" : "password"}
+              required
+            />
+
+            <label>Password</label>
+
+            <span
+              className="password-toggle"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
+
+          </div>
 
           <button type="submit" disabled={Loading}>
             {Loading ? "Registering..." : "Register"}

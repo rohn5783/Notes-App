@@ -4,6 +4,7 @@ import Register from "./components/pages/Register";
 import UserProfile from "./components/pages/userProfile";
 import Protected from "./auth/protected.jsx";
 import NotFound from "./components/pages/NotFound.jsx";
+import Notes from "./components/pages/Notes.jsx";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
 path: "*",
 element: <NotFound />
+  },
+  {
+    path: "/notes",
+    element: <Protected><Notes /></Protected>
   }
 ]);
 

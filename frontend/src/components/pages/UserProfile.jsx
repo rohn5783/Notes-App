@@ -1,49 +1,108 @@
 import React from "react";
 import "../styles/userProfile.scss";
-import { useAuth } from "../../auth/hooks/useAuth";
-
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../auth/hooks/useAuth";
+import { motion } from "framer-motion";
 
 const UserProfile = () => {
+
   const navigate = useNavigate();
+  const { logout, user } = useAuth();
 
-  // Example user data (backend se aayega baad me)
-  const user = {
-    name: "Rohit Kumar",
-    email: "rohit@gmail.com",
-    createdAt: "10 March 2026",
-  };
+  const notes = user?.notes || [];
 
-  const { logout } = useAuth();
-
-  const handleLogOut = async () => {
+  const handleLogout = async () => {
     await logout();
     navigate("/login");
   };
 
+  if (!user) {
+    return <div className="loading">Loading...</div>;
+  }
+
   return (
-    <div className="profile-container">
-      <div className="profile-card">
-        <h2>User Profile</h2>
+    <div className="profile-page">
 
-        <div className="profile-info">
-          <p>
-            <span>Name:</span> {user.name}
-          </p>
+      <motion.div
+        className="profile-card"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
 
-          <p>
-            <span>Email:</span> {user.email}
-          </p>
+        {/* Profile Header */}
 
-          <p>
-            <span>Account Created:</span> {user.createdAt}
-          </p>
+        <div className="profile-header">
+
+          <motion.div
+            className="avatar"
+            whileHover={{ scale: 1.1 }}
+          >
+            {user?.name?.charAt(0)?.toUpperCase()}
+          </motion.div>
+
+          <div className="user-info">
+            <h2>{user?.name}</h2>
+            <p>{user?.email}</p>
+          </div>
+
         </div>
 
-        <button className="logout-btn" onClick={handleLogOut}>
+        {/* Notes Section */}
+
+        <div className="notes-section">
+
+          <div className="notes-header">
+
+            <h3>Your Notes</h3>
+
+            <motion.button
+              className="add-note-btn"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => navigate("/notes")}
+            >
+              + Add Note
+            </motion.button>
+
+          </div>
+
+          <div className="notes-grid">
+
+            {notes.length === 0 && (
+              <p className="empty">No notes yet.</p>
+            )}
+
+            {notes.map((note) => (
+
+              <motion.div
+                key={note._id}
+                className="note-card"
+                whileHover={{ y: -6 }}
+              >
+
+                <h4>{note.title}</h4>
+                <p>{note.content}</p>
+
+              </motion.div>
+
+            ))}
+
+          </div>
+
+        </div>
+
+        <motion.button
+          className="logout-btn"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={handleLogout}
+        >
           Logout
-        </button>
-      </div>
+        </motion.button>
+
+      </motion.div>
+
     </div>
   );
 };

@@ -1,14 +1,69 @@
 :root {
+
+  /* Light Theme */
+
   --bg-gradient: linear-gradient(135deg, #667eea, #764ba2);
+
+  --text-color: #111;
+  --card-bg: rgba(255,255,255,0.6);
+
+  --blur: blur(20px);
+
 }
+
+/* Dark Theme */
 
 [data-theme="dark"] {
+
   --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+
+  --text-color: #ffffff;
+
+  --card-bg: rgba(255,255,255,0.06);
+
 }
 
-body {
+/* Reset */
+
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+
+body {
+
   min-height: 100vh;
+
   background: var(--bg-gradient);
-  font-family: Arial, Helvetica, sans-serif;
+  background-attachment: fixed;
+
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+
+  color: var(--text-color);
+
+  transition: background 0.4s ease, color 0.3s ease;
+
+}
+
+/* Smooth scroll */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Glass card base class */
+
+.glass {
+
+  backdrop-filter: var(--blur);
+
+  background: var(--card-bg);
+
+  border-radius: 16px;
+
+  border: 1px solid rgba(255,255,255,0.15);
+
 }

@@ -3,7 +3,9 @@ import "../styles/notfound.scss";
 
 function NotFound() {
   return (
-    <div className="notfound-container">
+    <div className="notfound-page">
+
+      <div className="background-blur"></div>
 
       <div className="notfound-card">
 
@@ -20,6 +22,7 @@ function NotFound() {
         </p>
 
         <div className="actions">
+
           <Link to="/" className="home-btn">
             Go Home
           </Link>
@@ -30,6 +33,7 @@ function NotFound() {
           >
             Go Back
           </button>
+
         </div>
 
       </div>

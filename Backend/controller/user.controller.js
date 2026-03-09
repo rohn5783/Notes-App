@@ -88,7 +88,7 @@ async function loginUser(req, res) {
     },
   });
 }
-
+//  logout 
 async function logoutUser(req, res) {
   const token = req.cookies.token;
   res.clearCookie("token");
@@ -98,4 +98,13 @@ async function logoutUser(req, res) {
   });
 }
 
-export default { createUser, loginUser, logoutUser };
+//  get user by id
+async function getUserById(req,res) {
+  const user = await User.findById(req.params.id);
+  res.status(200).json({
+    message:"User fetched successfully",
+    user
+  })
+}
+
+export default { createUser, loginUser, logoutUser,getUserById };
