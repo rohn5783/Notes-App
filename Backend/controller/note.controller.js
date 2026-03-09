@@ -1,4 +1,5 @@
 
+import mongoose from "mongoose";
 import Note from "../model/notes.model.js";
 import slugify from "slugify";
 
@@ -83,7 +84,7 @@ async function getAllNotes(req, res) {
   });
 }
 
-
+//  delete note by slug
 async function deleteNotebySlug(req,res) {
   const note = await Note.findOneAndDelete({
     user: req.user.id,
@@ -102,7 +103,18 @@ async function deleteNotebySlug(req,res) {
 }
 
 
+//  get user specific notes
+
+async function  getUserNotes(req,res) {
+  const {id,slug} = req.params;
+  const notes = await Note.find({user:id}).populate({path:"user",select:"-password"});
+  res.status(200).json({
+    message:"All notes fetched successfully",
+    notes,
+  })
+}
 
 
 
-export default { createNote, getAllNotes, updateNote, getNoteBySlug, deleteNotebySlug };
+
+export default { createNote, getAllNotes, updateNote, getNoteBySlug, deleteNotebySlug,getUserNotes };

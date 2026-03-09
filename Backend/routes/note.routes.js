@@ -8,6 +8,7 @@ noteRouter.get("/getAll", noteController.getAllNotes);
 noteRouter.patch("/update/:slug", noteController.updateNote);
 noteRouter.get("/get/:slug", noteController.getNoteBySlug);
 noteRouter.delete("/delete/:slug", noteController.deleteNotebySlug);
+noteRouter.get("/getUserNotes/:id/:slug", noteController.getUserNotes);
 
 
 export default noteRouter;

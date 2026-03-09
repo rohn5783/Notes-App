@@ -1,25 +1,49 @@
+import React from "react";
 import "../styles/userProfile.scss";
 import { useAuth } from "../../auth/hooks/useAuth";
-import { useNavigate } from "react-router";
+
+import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
-const navigate = useNavigate();
-const {logout} = useAuth();
+  const navigate = useNavigate();
 
-const handleLogOut = async () => {
-  await logout();
-  navigate("/login");
-};
+  // Example user data (backend se aayega baad me)
+  const user = {
+    name: "Rohit Kumar",
+    email: "rohit@gmail.com",
+    createdAt: "10 March 2026",
+  };
 
+  const { logout } = useAuth();
 
-
+  const handleLogOut = async () => {
+    await logout();
+    navigate("/login");
+  };
 
   return (
     <div className="profile-container">
-      <h1 className="mahadev">Har Har Mahadev</h1>
-      <h2 className="progress">Development In Progress</h2>
-      <p className="notes">Mere Notes Aap Ke Liye 🙏</p>
-      <button  className="log-out" onClick={handleLogOut}>Log Out</button>
+      <div className="profile-card">
+        <h2>User Profile</h2>
+
+        <div className="profile-info">
+          <p>
+            <span>Name:</span> {user.name}
+          </p>
+
+          <p>
+            <span>Email:</span> {user.email}
+          </p>
+
+          <p>
+            <span>Account Created:</span> {user.createdAt}
+          </p>
+        </div>
+
+        <button className="logout-btn" onClick={handleLogOut}>
+          Logout
+        </button>
+      </div>
     </div>
   );
 };
