@@ -39,7 +39,7 @@ const Notes = () => {
   const handleEdit = (note) => {
     setTitle(note.title);
     setContent(note.content);
-    setEditSlug(note.slug);
+    setEditSlug(note._id);
   };
 
   return (
@@ -79,7 +79,7 @@ const Notes = () => {
                 <div className="note-actions">
                   <button onClick={() => handleEdit(note)}>Edit</button>
 
-                  <button onClick={() => handleDelete(note.slug)}>
+                  <button onClick={() => handleDelete(note._id)}>
                     Delete
                   </button>
                 </div>

@@ -5,9 +5,9 @@ const noteRouter = express.Router();
 
 noteRouter.post("/create", noteController.createNote);
 noteRouter.get("/getAll", noteController.getAllNotes);
-noteRouter.patch("/update/:slug", noteController.updateNote);
+noteRouter.put("/update/:id", noteController.updateNote);
 noteRouter.get("/get/:slug", noteController.getNoteBySlug);
-noteRouter.delete("/delete/:slug", noteController.deleteNotebySlug);
+noteRouter.delete("/delete/:id", noteController.deleteNotebySlug);
 noteRouter.get("/getUserNotes/:id/:slug", noteController.getUserNotes);
 
 

@@ -23,38 +23,28 @@ async function createNote(req, res) {
 //
 
 //  user can update their note
-async function updateNote(req, res) {
+export const updateNote = async (req, res) => {
   try {
-    const { slug } = req.params;
-    const { title, content } = req.body;
+    const { id } = req.params;
 
-    const updatedSlug = title
-      ? slugify(title, { lower: true, strict: true })
-      : slug;
-
-    const updatedNote = await Note.findOneAndUpdate(
-      {
-        user: req.user.id,
-        slug: slug,
-      },
-      {
-        title,
-        content,
-        slug: updatedSlug,
-      },
-      { new: true },
+    const updatedNote = await Note.findByIdAndUpdate(
+      id,
+      req.body,
+      { returnDocument: "after" }
     );
 
     if (!updatedNote) {
-      return res.status(404).json({ message: "Note not found" });
+      return res.status(404).json({
+        message: "Note not found",
+      });
     }
 
     res.json(updatedNote);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}
 
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 async function getNoteBySlug(req, res) {
   const note = await Note.findOne({
     user: req.user.id,

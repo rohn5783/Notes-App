@@ -23,18 +23,15 @@ export const getNoteBySlug = async (slug) => {
   return res.data;
 };
 
-// update note
-export const updateNote = async (slug, data) => {
-  const res = await api.put(`/api/notes/update/${slug}`, data);
+export const updateNote = async (id, data) => {
+  const res = await api.put(`/api/notes/update/${id}`, data);
   return res.data;
 };
 
-// delete note
-export const deleteNote = async (slug) => {
-  const res = await api.delete(`/api/notes/delete/${slug}`);
+export const deleteNote = async (id) => {
+  const res = await api.delete(`/api/notes/delete/${id}`);
   return res.data;
 };
-
 // get notes of specific user
 export const getUserNotes = async (id) => {
   const res = await api.get(`/api/notes/user/getUserNotes/${id}`);
