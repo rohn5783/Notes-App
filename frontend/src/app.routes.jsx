@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
-import UserProfile from "./components/pages/UserProfile.jsx";
+import UserProfile from "../src/components/pages/UserProfile.jsx";
 import Protected from "./auth/protected.jsx";
 import NotFound from "./components/pages/NotFound.jsx";
 import Notes from "./components/pages/Notes.jsx";
