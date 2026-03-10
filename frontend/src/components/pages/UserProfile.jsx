@@ -2,14 +2,17 @@ import React from "react";
 import "../styles/userProfile.scss";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/hooks/useAuth";
+import { useNotes } from "../../auth/hooks/useNotes";
 import { motion } from "framer-motion";
 
 const UserProfile = () => {
 
   const navigate = useNavigate();
   const { logout, user } = useAuth();
+  const { notes, loading } = useNotes();
 
-  const notes = user?.notes || [];
+  // latest 3 notes preview
+  const previewNotes = notes?.slice(0, 3);
 
   const handleLogout = async () => {
     await logout();
@@ -69,11 +72,13 @@ const UserProfile = () => {
 
           <div className="notes-grid">
 
-            {notes.length === 0 && (
+            {loading && <p className="empty">Loading notes...</p>}
+
+            {!loading && previewNotes.length === 0 && (
               <p className="empty">No notes yet.</p>
             )}
 
-            {notes.map((note) => (
+            {!loading && previewNotes.map((note) => (
 
               <motion.div
                 key={note._id}
@@ -82,7 +87,7 @@ const UserProfile = () => {
               >
 
                 <h4>{note.title}</h4>
-                <p>{note.content}</p>
+                <p>{note.content.slice(0, 80)}...</p>
 
               </motion.div>
 

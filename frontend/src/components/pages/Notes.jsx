@@ -1,68 +1,55 @@
 import React, { useState } from "react";
 import "../styles/notes.scss";
 import { useNavigate } from "react-router-dom";
+import { useNotes } from "../../auth/hooks/useNotes";
 
 const Notes = () => {
-
   const navigate = useNavigate();
 
-  const [notes, setNotes] = useState([]);
+  const { notes, addNote, editNote, removeNote, loading } = useNotes();
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [editId, setEditId] = useState(null);
+  const [editSlug, setEditSlug] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!title || !content) return;
 
-    if (editId) {
+    try {
+      if (editSlug) {
+        await editNote(editSlug, { title, content });
+        setEditSlug(null);
+      } else {
+        await addNote({ title, content });
+      }
 
-      const updated = notes.map((note) =>
-        note.id === editId
-          ? { ...note, title, content }
-          : note
-      );
-
-      setNotes(updated);
-      setEditId(null);
-
-    } else {
-
-      const newNote = {
-        id: Date.now(),
-        title,
-        content
-      };
-
-      setNotes([...notes, newNote]);
+      setTitle("");
+      setContent("");
+    } catch (error) {
+      console.error(error);
     }
-
-    setTitle("");
-    setContent("");
   };
 
-  const handleDelete = (id) => {
-    setNotes(notes.filter((note) => note.id !== id));
+  const handleDelete = async (slug) => {
+    await removeNote(slug);
   };
 
   const handleEdit = (note) => {
     setTitle(note.title);
     setContent(note.content);
-    setEditId(note.id);
+    setEditSlug(note.slug);
   };
 
   return (
     <div className="notes-page">
-
       <div className="notes-container">
-
         <h2>Manage Notes</h2>
 
         {/* form */}
 
         <form onSubmit={handleSubmit} className="note-form">
-
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -75,50 +62,36 @@ const Notes = () => {
             placeholder="Write your note..."
           />
 
-          <button type="submit">
-            {editId ? "Update Note" : "Add Note"}
-          </button>
-
+          <button type="submit">{editSlug ? "Update Note" : "Add Note"}</button>
         </form>
 
         {/* notes list */}
 
         <div className="notes-list">
+          {loading ? (
+            <p>Loading notes...</p>
+          ) : (
+            notes?.map((note) => (
+              <div key={note._id} className="note-card">
+                <h3>{note.title}</h3>
+                <p>{note.content}</p>
 
-          {notes.map((note) => (
+                <div className="note-actions">
+                  <button onClick={() => handleEdit(note)}>Edit</button>
 
-            <div key={note.id} className="note-card">
-
-              <h3>{note.title}</h3>
-              <p>{note.content}</p>
-
-              <div className="note-actions">
-
-                <button onClick={() => handleEdit(note)}>
-                  Edit
-                </button>
-
-                <button onClick={() => handleDelete(note.id)}>
-                  Delete
-                </button>
-
+                  <button onClick={() => handleDelete(note.slug)}>
+                    Delete
+                  </button>
+                </div>
               </div>
-
-            </div>
-
-          ))}
-
+            ))
+          )}
         </div>
 
-        <button
-          className="back-btn"
-          onClick={() => navigate("/profile")}
-        >
+        <button className="back-btn" onClick={() => navigate("/profile")}>
           Back to Profile
         </button>
-
       </div>
-
     </div>
   );
 };
