@@ -12,7 +12,10 @@ connectDB();
 
 // CORS FIRST
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: [
+    "http://localhost:5173",
+    "https://notes-app-x6eu.vercel.app"
+  ],
   credentials: true
 }));
 
