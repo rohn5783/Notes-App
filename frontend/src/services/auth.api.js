@@ -1,4 +1,8 @@
-import { api } from "./api.client";
+import axios from 'axios';
+ const api = axios.create({
+    baseURL: 'http://localhost:3000',
+    withCredentials: true,
+ })
    
  export async function login({ email, password }) {
 
@@ -20,11 +24,6 @@ const response = await api.post('/api/notes/register', {
 
 return response.data;
 
-}
-
-export async function me() {
-  const response = await api.get("/api/notes/me");
-  return response.data;
 }
 
 

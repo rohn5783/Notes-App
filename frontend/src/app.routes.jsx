@@ -7,7 +7,10 @@ import NotFound from "./components/pages/NotFound.jsx";
 import Notes from "./components/pages/Notes.jsx";
 
 const router = createBrowserRouter([
-  
+  {
+    path: "/",
+    element: <Login /> 
+  },
   {
     path: "/login",
     element: <Login />
