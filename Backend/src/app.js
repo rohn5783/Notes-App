@@ -11,13 +11,12 @@ const app = express();
 connectDB();
 
 // CORS FIRST
-app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://notes-app-swcq.vercel.app"
-  ],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: "https://notes-app-swcq.vercel.app",
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(cookieParser());
 

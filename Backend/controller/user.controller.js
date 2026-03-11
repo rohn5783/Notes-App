@@ -65,28 +65,21 @@ async function loginUser(req, res) {
     });
   }
 
-  // create token
-  const token = jwt.sign(
-    { id: user._id },
-    process.env.JWT_SECRET,
-    { expiresIn: "1h" }
-  );
+const token = jwt.sign(
+  { id: user._id },
+  process.env.JWT_SECRET,
+  { expiresIn: "1h" }
+);
 
-  // set cookie
-  res.cookie("token", token, {
-    httpOnly: true,
-    sameSite: "none",
-  });
+res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+});
 
-  // response
-  res.status(200).json({
-    message: "User logged in successfully",
-    user: {
-      id: user._id,
-      email: user.email,
-      userName: user.userName,
-    },
-  });
+res.status(200).json({
+  message: "User logged in successfully",
+});
 }
 //  logout 
 async function logoutUser(req, res) {
