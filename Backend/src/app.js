@@ -14,7 +14,7 @@ connectDB();
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://notes-app-swcq.vercel.app/"
+    "https://notes-app-swcq.vercel.app"
   ],
   credentials: true
 }));
