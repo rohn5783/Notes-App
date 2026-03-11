@@ -1,24 +1,28 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
-
-async function identifyUser(req, res, next) {
-// console.log("Middleware Chala");
+export default function auth(req, res, next) {
 
   const token = req.cookies.token;
 
   if (!token) {
     return res.status(401).json({
-      message: "User not authenticated",
+      message: "Unauthorized"
     });
   }
 
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  
+  try {
 
-  req.user = decoded; // user data add kar diya request me
-  // console.log(req.user);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-  next();
+    req.user = decoded;
+
+    next();
+
+  } catch (error) {
+
+    return res.status(401).json({
+      message: "Invalid token"
+    });
+
+  }
 }
-
-export default identifyUser;

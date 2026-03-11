@@ -75,7 +75,7 @@ async function loginUser(req, res) {
   // set cookie
   res.cookie("token", token, {
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: "none",
   });
 
   // response

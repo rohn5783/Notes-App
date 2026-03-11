@@ -78,7 +78,7 @@ async function getAllNotes(req, res) {
 async function deleteNotebySlug(req,res) {
   const note = await Note.findOneAndDelete({
     user: req.user.id,
-    slug: req.params.slug,
+    
   }).populate({ path: "user", select: "-password" });
   
   if (!note) {
