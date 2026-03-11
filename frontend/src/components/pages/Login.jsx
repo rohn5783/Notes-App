@@ -7,7 +7,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function Login() {
 
-  const { handleLogin, Loading } = useAuth();
+  const { handleLogin, loading } = useAuth();
 
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
@@ -32,7 +32,7 @@ function Login() {
     }
   }
 
-  if (Loading)
+  if (loading)
     return (
       <div className="loading-screen">
         <div className="loader"></div>

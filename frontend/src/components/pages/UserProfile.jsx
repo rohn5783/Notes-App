@@ -6,6 +6,8 @@ import { useNotes } from "../../auth/hooks/useNotes";
 import { motion } from "framer-motion";
 
 const UserProfile = () => {
+  const MotionDiv = motion.div;
+  const MotionButton = motion.button;
 
   const navigate = useNavigate();
   const { logout, user } = useAuth();
@@ -26,7 +28,7 @@ const UserProfile = () => {
   return (
     <div className="profile-page">
 
-      <motion.div
+      <MotionDiv
         className="profile-card"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -37,15 +39,15 @@ const UserProfile = () => {
 
         <div className="profile-header">
 
-          <motion.div
+          <MotionDiv
             className="avatar"
             whileHover={{ scale: 1.1 }}
           >
-            {user?.name?.charAt(0)?.toUpperCase()}
-          </motion.div>
+            {user?.userName?.charAt(0)?.toUpperCase()}
+          </MotionDiv>
 
           <div className="user-info">
-            <h2>{user?.name}</h2>
+            <h2>{user?.userName}</h2>
             <p>{user?.email}</p>
           </div>
 
@@ -59,14 +61,14 @@ const UserProfile = () => {
 
             <h3>Your Notes</h3>
 
-            <motion.button
+            <MotionButton
               className="add-note-btn"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.9 }}
               onClick={() => navigate("/notes")}
             >
               + Add Note
-            </motion.button>
+            </MotionButton>
 
           </div>
 
@@ -80,7 +82,7 @@ const UserProfile = () => {
 
             {!loading && previewNotes.map((note) => (
 
-              <motion.div
+              <MotionDiv
                 key={note._id}
                 className="note-card"
                 whileHover={{ y: -6 }}
@@ -89,7 +91,7 @@ const UserProfile = () => {
                 <h4>{note.title}</h4>
                 <p>{note.content.slice(0, 80)}...</p>
 
-              </motion.div>
+              </MotionDiv>
 
             ))}
 
@@ -97,16 +99,16 @@ const UserProfile = () => {
 
         </div>
 
-        <motion.button
+        <MotionButton
           className="logout-btn"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.9 }}
           onClick={handleLogout}
         >
           Logout
-        </motion.button>
+        </MotionButton>
 
-      </motion.div>
+      </MotionDiv>
 
     </div>
   );

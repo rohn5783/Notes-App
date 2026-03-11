@@ -13,7 +13,12 @@ export default async function auth(req, res, next) {
     }
 
     // check blacklist (logout tokens)
-    const isBlacklisted = await redis.get(token);
+    let isBlacklisted = false;
+    try {
+      isBlacklisted = Boolean(await redis.get(token));
+    } catch {
+      isBlacklisted = false;
+    }
 
     if (isBlacklisted) {
       return res.status(401).json({

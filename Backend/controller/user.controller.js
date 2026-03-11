@@ -30,6 +30,12 @@ async function createUser(req, res) {
 
   res.status(201).json({
     message: "User created successfully",
+    user: {
+      _id: newUser._id,
+      userName: newUser.userName,
+      email: newUser.email,
+      profilePic: newUser.profilePic,
+    },
   });
 }
 
@@ -71,21 +77,42 @@ const token = jwt.sign(
   { expiresIn: "1h" }
 );
 
+const isProd = process.env.NODE_ENV === "production";
+
 res.cookie("token", token, {
   httpOnly: true,
-  secure: true,
-  sameSite: "none",
+  secure: isProd,
+  sameSite: isProd ? "none" : "lax",
 });
 
 res.status(200).json({
   message: "User logged in successfully",
+  user: {
+    _id: user._id,
+    userName: user.userName,
+    email: user.email,
+    profilePic: user.profilePic,
+  },
 });
 }
 //  logout 
 async function logoutUser(req, res) {
-  const token = req.cookies.token;
-  res.clearCookie("token");
-  await redis.set( token, Date.now().toString(),"EX",3600);
+  const token = req.cookies?.token;
+  const isProd = process.env.NODE_ENV === "production";
+
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: isProd,
+    sameSite: isProd ? "none" : "lax",
+  });
+
+  if (token) {
+    try {
+      await redis.set(token, Date.now().toString(), "EX", 3600);
+    } catch {
+      // If Redis isn't available, logout still works by clearing cookie.
+    }
+  }
   res.status(200).json({
     message: "User logged out successfully",
   });
@@ -100,4 +127,13 @@ async function getUserById(req,res) {
   })
 }
 
-export default { createUser, loginUser, logoutUser,getUserById };
+async function getMe(req, res) {
+  const user = await User.findById(req.user.id).select("-password");
+  if (!user) return res.status(404).json({ message: "User not found" });
+  res.status(200).json({
+    message: "User fetched successfully",
+    user,
+  });
+}
+
+export default { createUser, loginUser, logoutUser, getUserById, getMe };

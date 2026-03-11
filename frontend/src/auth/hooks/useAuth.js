@@ -1,54 +1,66 @@
-import { login, register, logout, getUserById } from "../../services/auth.api";
+import {
+  login as loginApi,
+  register as registerApi,
+  logout as logoutApi,
+  getUserById,
+} from "../../services/auth.api";
 import { useContext } from "react";
-import { AuthContext } from "../auth.context.jsx";
+import { AuthContext } from "../auth.context";
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  const { user, setUser, isLoading, setIsLoading } = context;
+  const { user, setUser, loading, setLoading } = context;
 //  handle login
   async function handleLogin({ email, password }) {
     console.log("api running");
     try {
-      setIsLoading(true);
-      const response = await login({ email, password });
-      setUser(response.user);
+      setLoading(true);
+      const response = await loginApi({ email, password });
+      setUser(response.user ?? null);
     } catch (error) {
       console.log(error.response?.data || error.message);
+      throw error;
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   }
 //  handle register
   async function handleRegister({ userName, email, password }) {
     try {
-      setIsLoading(true);
-      const response = await register({ userName, email, password });
-      setUser(response.user);
+      setLoading(true);
+      const response = await registerApi({ userName, email, password });
+      setUser(response.user ?? null);
     } catch (error) {
       console.log(error.response?.data || error.message);
+      throw error;
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   }
   //  handle logout
   async function logout() {
-    setIsLoading(true);
-    // const response = await register({email, password});
-    setUser(null);
-    setIsLoading(false);
+    try {
+      setLoading(true);
+      await logoutApi();
+    } catch (error) {
+      console.log(error.response?.data || error.message);
+    } finally {
+      setUser(null);
+      setLoading(false);
+    }
   }
 //  handle getuser
   async function getUser(id) {
     try {
-      setIsLoading(true);
+      setLoading(true);
       const response = await getUserById(id);
       setUser(response.user);
     } catch (error) {
       console.log(error.response?.data || error.message);
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   }
 
-  return { user, isLoading, handleLogin, handleRegister, logout, getUser };
+  return { user, loading, handleLogin, handleRegister, logout, getUser };
 };

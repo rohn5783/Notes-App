@@ -5,15 +5,23 @@ import noteRouter from "../routes/note.routes.js";
 import identifyUser from "../middleware/auth.middleware.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 
 connectDB();
 
 // CORS FIRST
+const corsOrigins = (process.env.CORS_ORIGIN || "http://localhost:5173")
+  .split(",")
+  .map((s) => s.trim())
+  .filter(Boolean);
+
 app.use(
   cors({
-    origin: "https://notes-app-swcq.vercel.app",
+    origin: corsOrigins,
     credentials: true,
   }),
 );

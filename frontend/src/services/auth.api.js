@@ -1,8 +1,4 @@
-import axios from 'axios';
- const api = axios.create({
-    baseURL: 'https://notes-app-1-31wh.onrender.com',
-    withCredentials: true,
- })
+import { api } from "./api.client";
    
  export async function login({ email, password }) {
 
@@ -24,6 +20,11 @@ const response = await api.post('/api/notes/register', {
 
 return response.data;
 
+}
+
+export async function me() {
+  const response = await api.get("/api/notes/me");
+  return response.data;
 }
 
 

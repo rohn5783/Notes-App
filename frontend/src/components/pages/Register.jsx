@@ -7,7 +7,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function Register() {
 
-  const { handleRegister, Loading } = useAuth();
+  const { handleRegister, loading } = useAuth();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -36,7 +36,7 @@ function Register() {
     navigate("/profile");
   }
 
-  if (Loading)
+  if (loading)
     return (
       <div className="loading-screen">
         <div className="loader"></div>
@@ -98,8 +98,8 @@ function Register() {
 
           </div>
 
-          <button type="submit" disabled={Loading}>
-            {Loading ? "Registering..." : "Register"}
+          <button type="submit" disabled={loading}>
+            {loading ? "Registering..." : "Register"}
           </button>
 
         </form>
