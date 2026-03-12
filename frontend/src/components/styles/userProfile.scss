@@ -18,6 +18,18 @@
   color: white;
   box-shadow: 0 10px 40px rgba(0,0,0,0.6);
 }
+.notes-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.view-notes-btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #ffffff;
+  cursor: pointer;
+}
 
 .profile-header {
   display: flex;

@@ -59,14 +59,31 @@ const UserProfile = () => {
 
             <h3>Your Notes</h3>
 
-            <motion.button
-              className="add-note-btn"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => navigate("/notes")}
-            >
-              + Add Note
-            </motion.button>
+            <div className="notes-buttons">
+
+              {/* Add Note */}
+
+              <motion.button
+                className="add-note-btn"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => navigate("/notes")}
+              >
+                + Add Note
+              </motion.button>
+
+              {/* View All Notes */}
+
+              <motion.button
+                className="view-notes-btn"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => navigate("/notes")}
+              >
+                View All Notes
+              </motion.button>
+
+            </div>
 
           </div>
 

@@ -127,6 +127,15 @@
   font-weight: 600;
 }
 
+.get-notes-btn {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #e5e5e5;
+  border: none;
+  cursor: pointer;
+}
 .back-btn:hover {
   transform: translateY(-2px);
 }
