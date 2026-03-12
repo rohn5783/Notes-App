@@ -1,6 +1,6 @@
 import axios from 'axios';
  const api = axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: 'https://notes-app-2-0d09.onrender.com',
     withCredentials: true,
  })
 
