@@ -81,8 +81,8 @@ const isProd = process.env.NODE_ENV === "production";
 
 res.cookie("token", token, {
   httpOnly: true,
-  secure: isProd,
-  sameSite: isProd ? "none" : "lax",
+  secure: true,
+  sameSite: "none",
 });
 
 res.status(200).json({

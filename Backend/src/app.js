@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // routes
-app.use("/api/notes", userRouter);
+app.use("/api/auth", userRouter);
 app.use("/api/notes", identifyUser, noteRouter);
 
 export default app;
