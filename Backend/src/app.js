@@ -13,18 +13,17 @@ const app = express();
 
 connectDB();
 
-// CORS FIRST
-const corsOrigins = (process.env.CORS_ORIGIN || "http://localhost:5173")
-  .split(",")
-  .map((s) => s.trim())
-  .filter(Boolean);
-
+// SIMPLE CORS
 app.use(
   cors({
-    origin: corsOrigins,
+    origin: [
+      "http://localhost:5173",        
+      "https://notes-app.vercel.app"  
+    ],
     credentials: true,
-  }),
+  })
 );
+
 app.use(express.json());
 app.use(cookieParser());
 
