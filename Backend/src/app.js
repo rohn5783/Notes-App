@@ -17,7 +17,7 @@ connectDB();
 app.use(
   cors({
     origin: [
-      "http://localhost:5173",        
+             
       "https://notes-app-seven-peach.vercel.app"  
     ],
     credentials: true,
