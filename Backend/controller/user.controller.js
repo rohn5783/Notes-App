@@ -102,10 +102,12 @@ async function logoutUser(req, res) {
   const token = req.cookies?.token;
   
 
-  res.clearCookie("token", {
-    httpOnly: true,
-    
-  });
+res.clearCookie("token", {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+  path: "/"
+});
 
   if (token) {
     try {
