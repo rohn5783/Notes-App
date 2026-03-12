@@ -16,11 +16,8 @@ connectDB();
 // SIMPLE CORS
 app.use(
   cors({
-    origin: [
-             
-      "https://notes-app-seven-peach.vercel.app"  
-    ],
-    credentials: true,
+    origin: "https://notes-app-seven-peach.vercel.app",
+    credentials: true
   })
 );
 

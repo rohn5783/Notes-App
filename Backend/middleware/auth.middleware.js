@@ -4,7 +4,7 @@ import redis from "../config/cache.js";
 export default async function auth(req, res, next) {
   try {
 
-    const token = req.cookies?.token;
+    const token = req.cookies.token;
 
     if (!token) {
       return res.status(401).json({

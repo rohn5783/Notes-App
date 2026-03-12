@@ -83,6 +83,7 @@ res.cookie("token", token, {
   httpOnly: true,
   secure: true,
   sameSite: "none",
+  path: "/",
   maxAge: 7 * 24 * 60 * 60 * 1000
 });
 
@@ -99,12 +100,11 @@ res.status(200).json({
 //  logout 
 async function logoutUser(req, res) {
   const token = req.cookies?.token;
-  const isProd = process.env.NODE_ENV === "production";
+  
 
   res.clearCookie("token", {
     httpOnly: true,
-    secure: isProd,
-    sameSite: isProd ? "none" : "lax",
+    
   });
 
   if (token) {
