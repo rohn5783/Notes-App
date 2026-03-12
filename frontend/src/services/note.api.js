@@ -1,6 +1,7 @@
 import axios from 'axios';
  const api = axios.create({
-    baseURL: 'https://notes-app-2-0d09.onrender.com',
+    // baseURL: 'https://notes-app-2-0d09.onrender.com',
+    baseURL: "https://notes-app-rktm.vercel.app",
     withCredentials: true,
  })
 
