@@ -3,7 +3,7 @@ import connectDB from "../config/notes.database.js";
 import userRouter from "../routes/user.routes.js";
 import noteRouter from "../routes/note.routes.js";
 import identifyUser from "../middleware/auth.middleware.js";
-import cookieParser from "cookie-parser";
+// import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 
@@ -22,7 +22,7 @@ app.use(
 );
 
 app.use(express.json());
-app.use(cookieParser());
+// app.use(cookieParser());
 
 // routes
 app.use("/api/auth", userRouter);

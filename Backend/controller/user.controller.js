@@ -70,54 +70,26 @@ async function loginUser(req, res) {
       message: "Password is incorrect",
     });
   }
-
 const token = jwt.sign(
   { id: user._id },
   process.env.JWT_SECRET,
-  { expiresIn: "1h" }
+  { expiresIn: "7d" }
 );
-
-
-
-res.cookie("token", token, {
-  httpOnly: true,
-  secure: true,
-  sameSite: "none",
-  path: "/",
-  maxAge: 7 * 24 * 60 * 60 * 1000
-});
 
 res.status(200).json({
   message: "User logged in successfully",
+  token,
   user: {
     _id: user._id,
     userName: user.userName,
     email: user.email,
     profilePic: user.profilePic,
-  },
-});
-}
-//  logout 
-async function logoutUser(req, res) {
-  const token = req.cookies?.token;
-  
-
-res.clearCookie("token", {
-  httpOnly: true,
-  secure: true,
-  sameSite: "none",
-  path: "/"
-});
-
-  if (token) {
-    try {
-      await redis.set(token, Date.now().toString(), "EX", 3600);
-    } catch {
-      // If Redis isn't available, logout still works by clearing cookie.
-    }
   }
+});
+//  logout 
+async function logoutUser(req,res){
   res.status(200).json({
-    message: "User logged out successfully",
+    message:"Logged out"
   });
 }
 

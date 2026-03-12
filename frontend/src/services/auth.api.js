@@ -9,6 +9,9 @@ import axios from 'axios';
  export async function login({ email, password }) {
 
 const response = await api.post('/api/auth/login', { email, password });
+
+localStorage.setItem("token", response.data.token);
+
 return response.data;
 
 }
