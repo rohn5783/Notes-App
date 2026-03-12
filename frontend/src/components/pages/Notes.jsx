@@ -3,7 +3,6 @@ import "../styles/notes.scss";
 import { useNavigate } from "react-router-dom";
 import { useNotes } from "../../auth/hooks/useNotes";
 
-
 const Notes = () => {
   const navigate = useNavigate();
 
@@ -46,22 +45,11 @@ const Notes = () => {
   return (
     <div className="notes-page">
       <div className="notes-container">
-
         <h2>Manage Notes</h2>
-
-        {/* NEW BUTTON */}
-
-       <button
-  className="get-notes-btn"
-  onClick={() => window.location.reload()}
->
-  Refresh Notes
-</button>
 
         {/* form */}
 
         <form onSubmit={handleSubmit} className="note-form">
-
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -74,12 +62,8 @@ const Notes = () => {
             placeholder="Write your note..."
           />
 
-          <button type="submit">
-            {editSlug ? "Update Note" : "Add Note"}
-          </button>
-
+          <button type="submit">{editSlug ? "Update Note" : "Add Note"}</button>
         </form>
-
 
         {/* notes list */}
 
@@ -89,36 +73,24 @@ const Notes = () => {
           ) : (
             notes?.map((note) => (
               <div key={note._id} className="note-card">
-
                 <h3>{note.title}</h3>
-
                 <p>{note.content}</p>
 
                 <div className="note-actions">
-
-                  <button onClick={() => handleEdit(note)}>
-                    Edit
-                  </button>
+                  <button onClick={() => handleEdit(note)}>Edit</button>
 
                   <button onClick={() => handleDelete(note._id)}>
                     Delete
                   </button>
-
                 </div>
-
               </div>
             ))
           )}
         </div>
 
-
-        <button
-          className="back-btn"
-          onClick={() => navigate("/profile")}
-        >
+        <button className="back-btn" onClick={() => navigate("/profile")}>
           Back to Profile
         </button>
-
       </div>
     </div>
   );

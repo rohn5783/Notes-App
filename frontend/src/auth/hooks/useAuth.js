@@ -31,13 +31,12 @@ export const useAuth = () => {
     }
   }
   //  handle logout
-  async function logout(){
-
-localStorage.removeItem("token");
-
-setUser(null);
-
-}
+  async function logout() {
+    setIsLoading(true);
+    // const response = await register({email, password});
+    setUser(null);
+    setIsLoading(false);
+  }
 //  handle getuser
   async function getUser(id) {
     try {
