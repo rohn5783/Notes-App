@@ -1,138 +1,170 @@
-📄 README.md
-# 📝 Notes Web App
-
-A full-stack Notes Web Application built using the MERN stack that allows users to create, update, delete, and manage their notes securely.
-
-This project implements authentication, protected routes, and a clean UI for managing notes efficiently.
-
----
-
-## 🚀 Features
-
-- User Authentication (Register & Login)
-- Protected Routes
-- Create Notes
-- Get All Notes
-- Get Note by Slug
-- Update Note by Slug
-- Delete Note by Slug
-- Custom 404 Not Found Page
-- Secure Password Hashing
-- JWT Authentication
-- Redis Token Blacklisting (Logout)
-
----
-
-## 🛠 Tech Stack
-
-### Frontend
-- React
-- React Router
-- SCSS
-- Axios
-
-### Backend
-- Node.js
-- Express.js
-
-### Database
-- MongoDB
-
-### Authentication
-- JWT (JSON Web Token)
-- bcrypt
-
-### Cache
-- Redis
-
----
-
-## 📂 Project Structure
+📝 Notes App – Full Stack MERN Project
 
 
+
+
+
+
+A Full-Stack Notes Management Web Application where users can securely create, manage, update, and delete personal notes.
+
+This project demonstrates full-stack development using the MERN stack and includes authentication, REST APIs, and deployment.
+
+🚀 Live Demo
+
+🌐 Live App
+
+https://notes-app-2-8e4i.onrender.com/
+
+💻 GitHub Repository
+
+https://github.com/rohn5783/Notes-App
+
+✨ Features
+
+✔ User Registration
+✔ Secure Login Authentication
+✔ Create Notes
+✔ View Notes Dashboard
+✔ Edit Notes
+✔ Delete Notes
+✔ User Specific Notes (private notes)
+✔ REST API Integration
+✔ Full Stack Deployment
+
+🛠 Tech Stack
+Frontend
+
+React.js
+
+React Router
+
+Axios
+
+CSS
+
+Backend
+
+Node.js
+
+Express.js
+
+MongoDB
+
+Mongoose
+
+Authentication
+
+JWT (JSON Web Token)
+
+Cookies
+
+Deployment
+
+Render (Full Stack Deployment)
+
+📸 Screenshots
+
+Create a folder in repo:
+
+screenshots
+
+Add images like:
+
+screenshots/login.png
+screenshots/dashboard.png
+screenshots/create-note.png
+
+Then README me add karo:
+
+## Login Page
+![Login](/screenshot/Screenshot%202026-03-13%20123941.png)
+![Register](/screenshot/Screenshot%202026-03-13%20123953.png)
+
+
+
+Agar tum demo GIF add karoge to recruiters ko project instantly samajh aata hai.
+
+Tool use karo:
+
+ScreenToGif
+
+Steps:
+
+App open karo
+
+Screen record karo (login → create note → edit → delete)
+
+Export as demo.gif
+
+Repo me add karo:
+
+screenshots/demo.gif
+
+README me:
+
+
+
+
+📂 Project Structure
 Notes-App
 │
 ├── backend
-│ ├── controllers
-│ ├── models
-│ ├── routes
-│ ├── middleware
-│ └── config
+│   ├── controllers
+│   ├── models
+│   ├── routes
+│   ├── middleware
+│   └── server.js
 │
 ├── frontend
-│ ├── components
-│ ├── pages
-│ ├── routes
-│ └── styles
+│   ├── src
+│   │   ├── components
+│   │   ├── pages
+│   │   ├── api
+│   │   └── App.jsx
+│
+├── screenshots
 │
 └── README.md
+⚙️ Installation
 
+Clone repository
 
----
-
-## ⚙️ Installation
-
-Clone the repository
-
-```bash
 git clone https://github.com/rohn5783/Notes-App.git
 
-Go to project folder
+Move to project directory
 
 cd Notes-App
-Install Backend Dependencies
-cd backend
+
+Install dependencies
+
 npm install
 
-Start backend server
+Run development server
 
 npm run dev
-Install Frontend Dependencies
-cd frontend
-npm install
+📚 What I Learned
 
-Start frontend
+Through this project I learned:
 
-npm run dev
-🔐 Authentication Flow
+Building REST APIs with Express
 
-User registers using email and password
+Authentication using JWT
 
-Password is hashed using bcrypt
+Connecting React with backend APIs
 
-User logs in and receives a JWT token
+MongoDB database integration
 
-Token is stored in cookies
+Full stack deployment
 
-Protected routes verify the token
-
-Redis is used for token blacklisting during logout
-
-📡 API Endpoints
-Auth
-POST /register
-POST /login
-POST /logout
-Notes
-POST /notes
-GET /notes
-GET /notes/:slug
-PUT /notes/:slug
-DELETE /notes/:slug
-📌 Future Improvements
-
-Notes Search
-
-Pagination
-
-Tags System
-
-Notes Pinning
-
-Better UI/UX
+Debugging production errors
 
 👨‍💻 Author
 
-web3.rohit
-GitHub: https://github.com/rohn5783
+Rohan
 
+GitHub
+https://github.com/rohn5783
+
+⭐ Support
+
+If you like this project, consider giving it a star ⭐ on GitHub.
