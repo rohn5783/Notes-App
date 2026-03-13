@@ -9,28 +9,29 @@ import Notes from "./components/pages/Notes.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Login /> 
+    element: <Login />,
   },
   {
     path: "/login",
-    element: <Login />
+    element: <Login />,
   },
   {
     path: "/register",
-    element: <Register />
+    element: <Register />,
   },
   {
     path: "/profile",
-    element:<Protected><UserProfile /></Protected>
-  },
-  {
-path: "*",
-element: <NotFound />
+    element: <Protected><UserProfile /></Protected>,
   },
   {
     path: "/notes",
-    element: <Protected><Notes /></Protected>
-  }
+    element: <Protected><Notes /></Protected>,
+  },
+  {
+    // Catch-all route hamesha last me
+    path: "*",
+    element: <NotFound />,
+  },
 ]);
 
 export default router;

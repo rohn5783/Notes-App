@@ -1,17 +1,30 @@
 import jwt from "jsonwebtoken";
+import redis from "../config/cache.js";
 
-export default function auth(req, res, next) {
+export default async function auth(req, res, next) {
   try {
 
-    const authHeader = req.headers.authorization;
+    const token = req.cookies?.token;
 
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    if (!token) {
       return res.status(401).json({
         message: "Unauthorized - Token missing"
       });
     }
 
-    const token = authHeader.split(" ")[1];
+    // check blacklist (logout tokens)
+    let isBlacklisted = false;
+    try {
+      isBlacklisted = Boolean(await redis.get(token));
+    } catch {
+      isBlacklisted = false;
+    }
+
+    if (isBlacklisted) {
+      return res.status(401).json({
+        message: "Unauthorized - Token expired"
+      });
+    }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
@@ -20,8 +33,10 @@ export default function auth(req, res, next) {
     next();
 
   } catch (error) {
+
     return res.status(401).json({
       message: "Invalid token"
     });
+
   }
 }
