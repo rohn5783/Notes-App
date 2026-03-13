@@ -1,4 +1,5 @@
 // backend/app.js
+
 import express from "express";
 import connectDB from "../config/notes.database.js";
 import userRouter from "../routes/user.routes.js";
@@ -13,17 +14,13 @@ dotenv.config();
 
 const app = express();
 connectDB();
+
 const __dirname = path.resolve();
 
-// ===== CORS =====
-const corsOrigins = (process.env.CORS_ORIGIN || "https://notes-app-2-8e4i.onrender.com")
-  .split(",")
-  .map((s) => s.trim())
-  .filter(Boolean);
-
+// CORS
 app.use(
   cors({
-    origin: corsOrigins,
+    origin: true,
     credentials: true,
   })
 );
@@ -31,20 +28,15 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-// ===== API Routes =====
+// API routes
 app.use("/api/notes", userRouter);
 app.use("/api/notes", identifyUser, noteRouter);
 
-// ===== Serve React Frontend =====
+// serve frontend
 app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
-// ===== Catch-all route for React Router =====
-// Serve React frontend for all non-API routes
-app.use((req, res, next) => {
-  // Agar request /api se start hoti hai, next() call karo
-  if (req.path.startsWith("/api")) return next();
-
-  // Otherwise serve React index.html
+// react router support
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "/frontend/dist/index.html"));
 });
 
