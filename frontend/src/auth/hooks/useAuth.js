@@ -1,48 +1,21 @@
-import { login, register, logout, getUserById } from "../../services/auth.api";
+import { login, register, logout as logoutApi, getUserById } from "../../services/auth.api";
 import { useContext } from "react";
 import { AuthContext } from "../auth.context.jsx";
 
 export const useAuth = () => {
+
   const context = useContext(AuthContext);
   const { user, setUser, isLoading, setIsLoading } = context;
-//  handle login
+
+  // login
   async function handleLogin({ email, password }) {
-    console.log("api running");
     try {
       setIsLoading(true);
+
       const response = await login({ email, password });
+
       setUser(response.user);
-    } catch (error) {
-      console.log(error.response?.data || error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-//  handle register
-  async function handleRegister({ userName, email, password }) {
-    try {
-      setIsLoading(true);
-      const response = await register({ userName, email, password });
-      setUser(response.user);
-    } catch (error) {
-      console.log(error.response?.data || error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-  //  handle logout
-  async function logout() {
-    setIsLoading(true);
-    // const response = await register({email, password});
-    setUser(null);
-    setIsLoading(false);
-  }
-//  handle getuser
-  async function getUser(id) {
-    try {
-      setIsLoading(true);
-      const response = await getUserById(id);
-      setUser(response.user);
+
     } catch (error) {
       console.log(error.response?.data || error.message);
     } finally {
@@ -50,5 +23,60 @@ export const useAuth = () => {
     }
   }
 
-  return { user, isLoading, handleLogin, handleRegister, logout, getUser };
+  // register
+  async function handleRegister({ userName, email, password }) {
+    try {
+      setIsLoading(true);
+
+      const response = await register({ userName, email, password });
+
+      setUser(response.user);
+
+    } catch (error) {
+      console.log(error.response?.data || error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  // logout
+  async function handleLogout() {
+    try {
+      setIsLoading(true);
+
+      await logoutApi(); // backend logout
+
+      setUser(null);
+
+    } catch (error) {
+      console.log(error.response?.data || error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  // get user by id
+  async function getUser(id) {
+    try {
+      setIsLoading(true);
+
+      const response = await getUserById(id);
+
+      setUser(response.user);
+
+    } catch (error) {
+      console.log(error.response?.data || error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  return {
+    user,
+    isLoading,
+    handleLogin,
+    handleRegister,
+    handleLogout,
+    getUser
+  };
 };
