@@ -16,7 +16,7 @@ connectDB();
 const __dirname = path.resolve();
 
 // ===== CORS =====
-const corsOrigins = (process.env.CORS_ORIGIN || "http://localhost:5173")
+const corsOrigins = (process.env.CORS_ORIGIN || "https://notes-app-2-8e4i.onrender.com")
   .split(",")
   .map((s) => s.trim())
   .filter(Boolean);
