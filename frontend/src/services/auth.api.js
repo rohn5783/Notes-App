@@ -41,3 +41,7 @@ const response = await api.get(`/api/notes/get/${id}`);
 return response.data;
 
 }
+export async function getMe() {
+  const response = await api.get('/api/notes/me');
+  return response.data;
+}
