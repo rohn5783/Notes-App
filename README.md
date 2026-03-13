@@ -160,7 +160,7 @@ Debugging production errors
 
 👨‍💻 Author
 
-Rohan
+web3.rohit
 
 GitHub
 https://github.com/rohn5783
