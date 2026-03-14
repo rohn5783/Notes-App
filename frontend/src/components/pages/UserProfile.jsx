@@ -105,6 +105,7 @@ const UserProfile = () => {
 
                 <h4>{note.title}</h4>
                 <p>{note.content.slice(0, 80)}...</p>
+                <p> {note.tags.join(", ")}</p>
 
               </motion.div>
 

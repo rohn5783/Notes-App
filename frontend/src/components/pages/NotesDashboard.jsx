@@ -161,6 +161,7 @@ export default function NotesDashboard() {
               <h3>{note.title}</h3>
 
               <p>{note.content}</p>
+              
 
               <div className="note-actions">
 
