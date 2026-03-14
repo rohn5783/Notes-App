@@ -8,14 +8,14 @@ import { motion } from "framer-motion";
 const UserProfile = () => {
 
   const navigate = useNavigate();
-  const { logout, user } = useAuth();
+  const { handleLogout, user } = useAuth();
   const { notes, loading } = useNotes();
 
   // latest 3 notes preview
   const previewNotes = notes?.slice(0, 3);
 
-  const handleLogout = async () => {
-    await logout();
+  const handleUserLogout = async () => {
+    await handleLogout();
     navigate("/login");
   };
 
@@ -118,7 +118,7 @@ const UserProfile = () => {
           className="logout-btn"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.9 }}
-          onClick={handleLogout}
+          onClick={handleUserLogout}
         >
           Logout
         </motion.button>

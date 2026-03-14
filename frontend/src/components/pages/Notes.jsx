@@ -80,7 +80,7 @@ const Notes = () => {
           <input
             value={tags}
   type="text"
-  placeholder="tags (comma separated)"
+  placeholder="tags"
   onChange={(e) => setTags(e.target.value)}
 />
 
