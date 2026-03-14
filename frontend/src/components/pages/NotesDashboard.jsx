@@ -161,8 +161,14 @@ export default function NotesDashboard() {
               <h3>{note.title}</h3>
 
               <p>{note.content}</p>
-              
 
+<p className="note-tags">
+  {note.tags?.map((tag, index) => (
+    <span key={index} className="tag">
+      #{tag}
+    </span>
+  ))}
+</p>
               <div className="note-actions">
 
                 <button

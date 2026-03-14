@@ -105,7 +105,13 @@ const UserProfile = () => {
 
                 <h4>{note.title}</h4>
                 <p>{note.content.slice(0, 80)}...</p>
-                <p> {note.tags.join(", ")}</p>
+                <p className="note-tags">
+  {note.tags?.map((tag, index) => (
+    <span key={index} className="tag">
+      #{tag}
+    </span>
+  ))}
+</p>
 
               </motion.div>
 

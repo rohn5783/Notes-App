@@ -120,7 +120,25 @@
   color: #aaa;
   margin-bottom: 15px;
 }
+.note-tags {
+  margin-top: 10px;
+}
 
+.tag {
+  display: inline-block;
+  margin: 4px;
+  padding: 4px 10px;
+  font-size: 13px;
+  font-weight: bold;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: white;
+  transition: transform 0.2s ease;
+}
+
+.tag:hover {
+  transform: scale(1.08);
+}
 
 /* actions */
 
