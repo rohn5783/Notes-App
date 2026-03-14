@@ -5,12 +5,13 @@ import slugify from "slugify";
 
 //  create note
 async function createNote(req, res) {
-  const { title, content } = req.body;
+  const { title, content,tags } = req.body;
 
   const note = await Note.create({
     title,
 
     content,
+    tags,
     user: req.user.id,
   });
   // console.log(user)
@@ -105,7 +106,16 @@ async function  getUserNotes(req,res) {
   })
 }
 
+//  get notes by tag
+
+async function getNotesByTag(req,res) {
+  const {tag} = req.params;
+  const notes = await Note.find({tags:tag,user:req.user.id}).populate({path:"user",select:"-password"});
+  res.status(200).json({
+    message:"All notes fetched successfully",
+    notes,
+  })
+}
 
 
-
-export default { createNote, getAllNotes, updateNote, getNoteBySlug, deleteNotebySlug,getUserNotes };
+export default { createNote, getAllNotes, updateNote, getNoteBySlug, deleteNotebySlug,getUserNotes,getNotesByTag };

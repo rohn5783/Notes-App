@@ -13,6 +13,11 @@ const noteSchema = new mongoose.Schema({
     type: String,
     required: [true, "Content is required"],
   },
+   tags: [
+      {
+        type: String,
+      },
+    ],
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Users",

@@ -12,27 +12,30 @@ const Notes = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [editSlug, setEditSlug] = useState(null);
+  const [tags, setTags] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!title || !content) return;
+  const tagArray = tags.split(",").map(tag => tag.trim());
 
-    try {
-      if (editSlug) {
-        await editNote(editSlug, { title, content });
-        setEditSlug(null);
-      } else {
-        await addNote({ title, content });
-      }
+  if (!title || !content || !tags) return;
 
-      setTitle("");
-      setContent("");
-    } catch (error) {
-      console.error(error);
+  try {
+    if (editSlug) {
+      await editNote(editSlug, { title, content, tags: tagArray });
+      setEditSlug(null);
+    } else {
+      await addNote({ title, content, tags: tagArray });
     }
-  };
 
+    setTitle("");
+    setContent("");
+    setTags("");
+  } catch (error) {
+    console.error(error);
+  }
+};
   const handleDelete = async (slug) => {
     await removeNote(slug);
   };
@@ -41,6 +44,7 @@ const Notes = () => {
     setTitle(note.title);
     setContent(note.content);
     setEditSlug(note._id);
+    setTags(note.tags.join(","));
   };
 
   return (
@@ -73,6 +77,12 @@ const Notes = () => {
             onChange={(e) => setContent(e.target.value)}
             placeholder="Write your note..."
           />
+          <input
+            value={tags}
+  type="text"
+  placeholder="tags (comma separated)"
+  onChange={(e) => setTags(e.target.value)}
+/>
 
           <button type="submit">
             {editSlug ? "Update Note" : "Add Note"}
@@ -93,6 +103,13 @@ const Notes = () => {
                 <h3>{note.title}</h3>
 
                 <p>{note.content}</p>
+                <div className="note-tags">
+  {note.tags?.map((tag, index) => (
+    <span key={index} className="tag">
+      #{tag}
+    </span>
+  ))}
+</div>
 
                 <div className="note-actions">
 

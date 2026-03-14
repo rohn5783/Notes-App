@@ -9,5 +9,6 @@ noteRouter.get("/user/getUserNotes/:id", noteController.getUserNotes);
 noteRouter.put("/update/:id", noteController.updateNote);
 noteRouter.get("/get/:slug", noteController.getNoteBySlug);
 noteRouter.delete("/delete/:id", noteController.deleteNotebySlug);
+noteRouter.get("/tag/:tag", noteController.getNotesByTag);
 
 export default noteRouter;

@@ -37,3 +37,5 @@ export const getUserNotes = async (id) => {
   const res = await api.get(`/api/notes/user/getUserNotes/${id}`);
   return res.data;
 };
+
+
